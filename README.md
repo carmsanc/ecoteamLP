@@ -1,0 +1,2 @@
+# ecoteamLP
+Proyecto segundo parcial
