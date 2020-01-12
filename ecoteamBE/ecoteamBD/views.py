@@ -2,13 +2,14 @@
 from django.http import HttpResponse, Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, generics
+from rest_framework import status
 from .models import *
-from .serializers import UsuarioSerializer, DenunciaSerializer, PuntoRecoleccionSerializer, SectorSerializer, HorarioRecoleccionSerializer
+from .serializers import UsuarioSerializer, DenunciaSerializer, PuntoRecoleccionSerializer, SectorSerializer, \
+    HorarioRecoleccionSerializer
 
 # Create your views Usuarios
 
-class listaUsuarios(APIView):
+class usuarios_lista(APIView):
     def get(self, request, format=None):
         usuarios1 = tbl_usuarios.objects.all()
         serializer = UsuarioSerializer(usuarios1, many=True)
@@ -22,7 +23,7 @@ class listaUsuarios(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class detalleUsuarios(APIView):
+class usuarios_detalle(APIView):
 
     def get_object(self, pk):
         try:
@@ -50,7 +51,7 @@ class detalleUsuarios(APIView):
 
 # Create your views Sector
 
-class SectorList(APIView):
+class sector_lista(APIView):
     def get(self, request, format=None):
         sector1 = tbl_sector.objects.all()
         serializer = SectorSerializer(sector1, many=True)
@@ -63,7 +64,7 @@ class SectorList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class SectorDetalle(APIView):
+class sector_detalle(APIView):
 
     def get_object(self, pk):
         try:
@@ -91,7 +92,7 @@ class SectorDetalle(APIView):
 
 # Create your views PtoRec
 
-class PtoRecoleccionList(APIView):
+class punto_lista(APIView):
     def get(self, request, format=None):
         punto1 = tbl_puntoRecoleccion.objects.all()
         serializer = PuntoRecoleccionSerializer(punto1, many=True)
@@ -104,7 +105,7 @@ class PtoRecoleccionList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class PtoRecoleccionDetalle(APIView):
+class punto_detalle(APIView):
 
     def get_object(self, pk):
         try:
@@ -113,8 +114,8 @@ class PtoRecoleccionDetalle(APIView):
             raise Http404
 
     def get(self, request, pk, format=None):
-        noticia1 = self.get_object(pk)
-        serializer = PuntoRecoleccionSerializer(noticia1)
+        punto = self.get_object(pk)
+        serializer = PuntoRecoleccionSerializer(punto)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
@@ -185,7 +186,7 @@ class horario_detalle(APIView):
     def get_object(self, pk):
         try:
             return tbl_horarioRecoleccion.objects.get(idHorario=pk)
-        except tbl_denuncias.DoesNotExist:
+        except tbl_horarioRecoleccion.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
