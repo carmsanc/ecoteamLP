@@ -1,4 +1,4 @@
-# apppractice
+# ECOTEAMFE
 
 A new Flutter project.
 
