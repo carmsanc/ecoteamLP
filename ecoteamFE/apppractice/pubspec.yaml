@@ -13,6 +13,10 @@ dependencies:
  
   cupertino_icons: ^0.1.2
   http: any
+  image_picker: ^0.5.3+1
+  font_awesome_flutter: ^8.2.0
+  firebase_storage: ^2.1.0+1
+  firebase_database: ^2.0.3
 
 
 dev_dependencies:
@@ -29,3 +33,6 @@ flutter:
   - family:          Chewy
     fonts:
      - asset:        assets/fonts/Chewy.ttf
+
+module:
+    androidX: true
