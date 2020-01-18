@@ -1,3 +1,4 @@
+import 'package:apppractice/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'signup_screen.dart';
 //import '../services/auth_service.dart';
@@ -16,6 +17,7 @@ class _Login_ScreenState extends State<Login_Screen> {
   String user, password;
   _submit() {
     if (_formKey.currentState.validate()) {
+      
       _formKey.currentState.save();
       print(user);     //cambiar email
       print(password);
@@ -82,7 +84,8 @@ class _Login_ScreenState extends State<Login_Screen> {
                   Container(
                     width: 250.0,
                     child: FlatButton(
-                      onPressed: _submit,
+                      onPressed: ()=>
+                      Navigator.pushNamed(context, Home_Screen.id),
                       color: Colors.lightGreen,
                       shape: new RoundedRectangleBorder(
                                           borderRadius: new BorderRadius.circular(50.0)

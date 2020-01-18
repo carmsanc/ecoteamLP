@@ -24,5 +24,8 @@ flutter:
   uses-material-design: true
   assets: 
         - assets/images/
-
- 
+        
+  fonts:
+  - family:          Chewy
+    fonts:
+     - asset:        assets/fonts/Chewy.ttf

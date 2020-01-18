@@ -1,13 +1,10 @@
-import 'dart:async';
-import 'dart:convert';
 
-import 'package:apppractice/pages/custom-clip.dart';
-import 'package:apppractice/pages/design.dart';
+import 'package:apppractice/pages/home_screen.dart';
 import 'package:apppractice/pages/login_screen.dart';
 import 'package:apppractice/pages/signup_screen.dart';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+
 
 void main() => runApp(MyApp());
 
@@ -23,10 +20,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
+        fontFamily: 'Chewy'
       ),
       home: Login_Screen(),
       routes: {
         Signup_Screen.id: (context) => Signup_Screen(),
+        Home_Screen.id: (context) => Home_Screen()
       },
     );
   }
