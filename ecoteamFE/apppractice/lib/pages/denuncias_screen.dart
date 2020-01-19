@@ -6,10 +6,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class Denuncias_Screen extends StatefulWidget {
-   var userData;
-   Denuncias_Screen(this.userData);
+  var userData;
+  Denuncias_Screen(this.userData);
 
-    static final String id = 'denuncias_screen';
+  static final String id = 'denuncias_screen';
   @override
   _Denuncias_ScreenState createState() => _Denuncias_ScreenState();
 }
@@ -37,7 +37,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
     });
   }
 
-  void handleSubmit(context) {
+  void handleSubmit() {
     final FormState form = _formKey.currentState;
 
     if (form.validate()) {
@@ -45,7 +45,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
       form.reset();
       itemRef.push().set(item.toJson());
     }
-    
+    print("se envio denuncia");
   }
 
   String descripcion;
@@ -85,7 +85,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
 
   Widget _buildHeader() {
     return SizedBox(
-      width: 180.0,
+      width: 230.0,
       height: 180.0,
       child: (_image != null)
           ? Image.file(
@@ -93,7 +93,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
               fit: BoxFit.fill,
             )
           : Image.network(
-              "https://www.emcoutdoor.com/blog/wp-content/uploads/2018/11/header-1.jpg",
+              "https://cmkt-image-prd.freetls.fastly.net/0.1.0/ps/1097377/910/607/m1/fpnw/wm0/megaphone-flat-icon-01-.jpg?1458317566&s=f6c09b36ab66dd498ab6f5ba18aca800",
               fit: BoxFit.fill,
             ),
     );
@@ -168,7 +168,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
   Widget _buildDescr() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Descripción'),
-      validator: (String value){
+      validator: (String value) {
         if (value.isEmpty) {
           return 'Ingrese una descripcion';
         }
@@ -186,7 +186,6 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
       },
       child: Text('Elegir Imagen'),
     );
-    
   }
 
   Widget _buildSubir(context) {
@@ -229,7 +228,6 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Builder(
         builder: (context) => Container(
           child: Form(
@@ -249,7 +247,15 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
                   color: Colors.green,
                   onPressed: () {
                     item.imagen = basename(_image.path);
-                    handleSubmit(context);
+                    handleSubmit();
+                    final snackBar = SnackBar(
+                      content: Text('Se ha enviado la denuncia'),
+                      
+                    );
+
+                    // Find the Scaffold in the widget tree and use
+                    // it to show a SnackBar.
+                    Scaffold.of(context).showSnackBar(snackBar);
                   },
                   elevation: 4.0,
                   splashColor: Colors.blueGrey,
@@ -258,7 +264,6 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
-                
               ],
             ),
           ),
