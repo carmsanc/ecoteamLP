@@ -37,7 +37,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
     });
   }
 
-  void handleSubmit() {
+  void handleSubmit(context) {
     final FormState form = _formKey.currentState;
 
     if (form.validate()) {
@@ -45,6 +45,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
       form.reset();
       itemRef.push().set(item.toJson());
     }
+    
   }
 
   String descripcion;
@@ -167,7 +168,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
   Widget _buildDescr() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Descripción'),
-      validator: (String value) {
+      validator: (String value){
         if (value.isEmpty) {
           return 'Ingrese una descripcion';
         }
@@ -185,6 +186,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
       },
       child: Text('Elegir Imagen'),
     );
+    
   }
 
   Widget _buildSubir(context) {
@@ -241,13 +243,13 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
                 _buildDescr(),
                 SizedBox(height: 10),
                 _buildFoto(),
-                _buildSubir(context),
-                SizedBox(height: 40),
+                //_buildSubir(context),
+                SizedBox(height: 10),
                 RaisedButton(
                   color: Colors.green,
                   onPressed: () {
                     item.imagen = basename(_image.path);
-                    handleSubmit();
+                    handleSubmit(context);
                   },
                   elevation: 4.0,
                   splashColor: Colors.blueGrey,
@@ -256,6 +258,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
+                
               ],
             ),
           ),

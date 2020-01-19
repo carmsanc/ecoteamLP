@@ -1,5 +1,6 @@
 import 'package:apppractice/pages/denuncias_screen.dart';
 import 'package:apppractice/pages/inicio_screen.dart';
+import 'package:apppractice/pages/map_screen.dart';
 import 'package:apppractice/pages/reciclar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,6 +36,7 @@ class _Home_ScreenState extends State<Home_Screen> {
         controller: _pageController,
         children: <Widget>[
           Inicio_Screen(data),
+          Map_Screen(data),
           Denuncias_Screen(data),
           Reciclar_Screen(data),
         ],
