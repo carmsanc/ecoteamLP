@@ -3,7 +3,6 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class Denuncias_Screen extends StatefulWidget {
   var userData;
@@ -44,8 +43,9 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
       form.save();
       form.reset();
       itemRef.push().set(item.toJson());
+      print("se envio denuncia");
     }
-    print("se envio denuncia");
+    
   }
 
   String descripcion;
@@ -188,11 +188,11 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
     );
   }
 
-  Widget _buildSubir(context) {
+  /* Widget _buildSubir(context) {
     return RaisedButton(
       color: Color(0xff476cfb),
       onPressed: () {
-        uploadPic(context);
+        //uploadPic(context);
       },
       elevation: 4.0,
       splashColor: Colors.blueGrey,
@@ -201,7 +201,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
         style: TextStyle(color: Colors.white, fontSize: 16.0),
       ),
     );
-  }
+  } */
 
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -212,7 +212,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
     });
   }
 
-  Future uploadPic(BuildContext context) async {
+  /* Future uploadPic(BuildContext context) async {
     String fileName = basename(_image.path);
     StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
@@ -223,7 +223,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
       Scaffold.of(context).showSnackBar(
           SnackBar(content: Text('Se ha seleccionado la imagen.')));
     });
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {

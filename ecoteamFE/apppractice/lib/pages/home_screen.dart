@@ -2,12 +2,14 @@ import 'package:apppractice/pages/denuncias_screen.dart';
 import 'package:apppractice/pages/inicio_screen.dart';
 import 'package:apppractice/pages/map_screen.dart';
 import 'package:apppractice/pages/reciclar_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class Home_Screen extends StatefulWidget {
-  var userData;
-  Home_Screen();
+  const Home_Screen({Key key, this.user}) : super(key: key);
+  final FirebaseUser user;
+
   @override
   static final String id = 'home_screen';
   _Home_ScreenState createState() => _Home_ScreenState();
@@ -23,7 +25,7 @@ class _Home_ScreenState extends State<Home_Screen> {
     super.initState();
 
     _pageController = PageController();
-    data = widget.userData;
+    data = widget.user.email;
     print(data);
   }
 
@@ -60,34 +62,29 @@ class _Home_ScreenState extends State<Home_Screen> {
           activeColor: Colors.lightGreen[700],
           items: [
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                size: 30.0,
-              ),
-              title: Text("Inicio")
-            ),
+                icon: Icon(
+                  Icons.home,
+                  size: 30.0,
+                ),
+                title: Text("Inicio")),
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.room,        //face, import_contacts,room, home
-                size: 30.0,
-              ),
-              title: Text("Puntos")
-            ),
+                icon: Icon(
+                  Icons.room, //face, import_contacts,room, home
+                  size: 30.0,
+                ),
+                title: Text("Puntos")),
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.import_contacts,
-                size: 30.0,
-              ),
-              title: Text("Residuos")
-            ),
-
+                icon: Icon(
+                  Icons.import_contacts,
+                  size: 30.0,
+                ),
+                title: Text("Residuos")),
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.face,
-                size: 30.0,
-              ),
-              title: Text("Denuncias")
-            ),
+                icon: Icon(
+                  Icons.face,
+                  size: 30.0,
+                ),
+                title: Text("Denuncias")),
           ]),
     );
   }

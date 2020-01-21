@@ -1,9 +1,9 @@
 import 'package:apppractice/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'signup_screen.dart';
-//import '../services/auth_service.dart';
 import 'package:apppractice/pages/custom-clip.dart';
 import 'package:apppractice/pages/design.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login_Screen extends StatefulWidget {
   static final String id = 'login_screen';
@@ -12,18 +12,20 @@ class Login_Screen extends StatefulWidget {
   _Login_ScreenState createState() => _Login_ScreenState();
 }
 
+
 class _Login_ScreenState extends State<Login_Screen> {
+  
   final _formKey = GlobalKey<FormState>();
-  String user, password;
-  _submit() {
+  String _email, _password;
+  /* _submit() {
     if (_formKey.currentState.validate()) {
       
       _formKey.currentState.save();
-      print(user);     //cambiar email
-      print(password);
+      print(_email);     //cambiar email
+      print(_password);
     }
     //AuthService.login(context, email, password);
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +64,8 @@ class _Login_ScreenState extends State<Login_Screen> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
                     child: TextFormField(
-                      decoration: InputDecoration(labelText: 'Usuario'),
-                      onSaved: (input) => user = input, //cambiar email
+                      decoration: InputDecoration(labelText: 'Email: '),
+                      onSaved: (input) => _email = input, //cambiar email
                     ),
                   ),
                   Padding(
@@ -74,7 +76,7 @@ class _Login_ScreenState extends State<Login_Screen> {
                       validator: (input) => input.length <= 1
                           ? 'Porfavor ingrese contraseña correcta'
                           : null,
-                      onSaved: (input) => password = input,
+                      onSaved: (input) => _password = input,
                       obscureText: true,
                     ),
                   ),
@@ -84,8 +86,7 @@ class _Login_ScreenState extends State<Login_Screen> {
                   Container(
                     width: 250.0,
                     child: FlatButton(
-                      onPressed: ()=>
-                      Navigator.pushNamed(context, Home_Screen.id),
+                      onPressed: signIn,
                       color: Colors.lightGreen,
                       shape: new RoundedRectangleBorder(
                                           borderRadius: new BorderRadius.circular(50.0)
@@ -118,5 +119,22 @@ class _Login_ScreenState extends State<Login_Screen> {
         ),
       ),
     );
+  }
+
+Future<void> signIn() async{
+    final formState = _formKey.currentState;
+    if(formState.validate()){
+      formState.save();
+      try{
+        final AuthResult result = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email,password: _password);
+        FirebaseUser auth_user= result.user;       
+        print(result.user);
+        //navigate home
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> Home_Screen(user:auth_user)));
+      }catch(e){
+        print(e.message);
+      }
+
+    }
   }
 }

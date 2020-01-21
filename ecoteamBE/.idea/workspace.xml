@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6f1bab65-4688-4850-9060-02b573969e07" name="Default Changelist" comment="" />
+    <list default="true" id="6f1bab65-4688-4850-9060-02b573969e07" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecoteamBE/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecoteamBE/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ecoteamFE/apppractice/lib/pages/denuncias_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../ecoteamFE/apppractice/lib/pages/denuncias_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ecoteamFE/apppractice/lib/pages/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../ecoteamFE/apppractice/lib/pages/login_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ecoteamFE/apppractice/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../ecoteamFE/apppractice/pubspec.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -9,6 +15,9 @@
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1W4W4z1sdXN0sauwnekgSVa7Pzi" />
   <component name="ProjectViewState">
@@ -19,7 +28,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ecoteamBD" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -79,6 +88,7 @@
       <workItem from="1578589445731" duration="754000" />
       <workItem from="1578772720586" duration="1709000" />
       <workItem from="1578844786889" duration="2491000" />
+      <workItem from="1579569066639" duration="3526000" />
     </task>
     <servers />
   </component>
@@ -86,22 +96,22 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1238" height="122" key="GridCell.Tab.0.bottom" timestamp="1578846013330">
+    <state width="1223" height="122" key="GridCell.Tab.0.bottom" timestamp="1579577728869">
       <screen x="0" y="23" width="1280" height="722" />
     </state>
-    <state width="1238" height="122" key="GridCell.Tab.0.bottom/0.23.1280.722@0.23.1280.722" timestamp="1578846013330" />
-    <state width="1238" height="122" key="GridCell.Tab.0.center" timestamp="1578846013329">
+    <state width="1223" height="122" key="GridCell.Tab.0.bottom/0.23.1280.722@0.23.1280.722" timestamp="1579577728869" />
+    <state width="1223" height="122" key="GridCell.Tab.0.center" timestamp="1579577728868">
       <screen x="0" y="23" width="1280" height="722" />
     </state>
-    <state width="1238" height="122" key="GridCell.Tab.0.center/0.23.1280.722@0.23.1280.722" timestamp="1578846013329" />
-    <state width="1238" height="122" key="GridCell.Tab.0.left" timestamp="1578846013328">
+    <state width="1223" height="122" key="GridCell.Tab.0.center/0.23.1280.722@0.23.1280.722" timestamp="1579577728868" />
+    <state width="1223" height="122" key="GridCell.Tab.0.left" timestamp="1579577728868">
       <screen x="0" y="23" width="1280" height="722" />
     </state>
-    <state width="1238" height="122" key="GridCell.Tab.0.left/0.23.1280.722@0.23.1280.722" timestamp="1578846013328" />
-    <state width="1238" height="122" key="GridCell.Tab.0.right" timestamp="1578846013329">
+    <state width="1223" height="122" key="GridCell.Tab.0.left/0.23.1280.722@0.23.1280.722" timestamp="1579577728868" />
+    <state width="1223" height="122" key="GridCell.Tab.0.right" timestamp="1579577728868">
       <screen x="0" y="23" width="1280" height="722" />
     </state>
-    <state width="1238" height="122" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1578846013329" />
+    <state width="1223" height="122" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1579577728868" />
     <state x="296" y="218" key="com.intellij.ide.util.TipDialog" timestamp="1578845109805">
       <screen x="0" y="23" width="1280" height="722" />
     </state>
