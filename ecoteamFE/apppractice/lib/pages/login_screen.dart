@@ -37,10 +37,10 @@ class _Login_ScreenState extends State<Login_Screen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-              child: ClipPath(
+              //child: ClipPath(
                   child: Container(
-                    height: mStyle.getheigth(val: 35),
-                    color: Colors.lightGreen[100],
+                    height: mStyle.getheigth(val: 30),
+                    //color: Colors.white,
                     child: Image.asset(
                       'assets/images/logo.png',
                       fit: BoxFit.fitHeight,
@@ -48,12 +48,12 @@ class _Login_ScreenState extends State<Login_Screen> {
                       height: mStyle.getheigth(val: 50),
                       width: mStyle.getwidth(),
                     ),
-                    padding: const EdgeInsets.all(30),
+                    padding: const EdgeInsets.all(10),
                     alignment: Alignment.center,
                   ),
-                  clipper: CustomClip(),
+                  //clipper: CustomClip(),
 
-                )
+              //  )
             ),
             Form(
               key: _formKey,
@@ -128,7 +128,8 @@ Future<void> signIn() async{
       try{
         final AuthResult result = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email,password: _password);
         FirebaseUser auth_user= result.user;       
-        print(result.user);
+        print(result);
+
         //navigate home
         Navigator.push(context, MaterialPageRoute(builder: (context)=> Home_Screen(user:auth_user)));
       }catch(e){

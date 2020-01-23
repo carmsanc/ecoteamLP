@@ -7,66 +7,57 @@ class Details extends StatelessWidget {
 
   Details(this.manejo);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        
-        children: <Widget>[
-          
-          Container(
-                margin:  EdgeInsets.only(left:10.0, right: 10.0, top: 30),
-                //padding: EdgeInsets.all(20.0),
-                height: 80.0,
-                width: 340,
-                decoration: BoxDecoration(
-                  color: manejo.colori,
-                  shape: BoxShape.rectangle,
-                  borderRadius: new BorderRadius.circular(30.0),
-                  boxShadow: <BoxShadow>[
-                    new BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 10.0,
-                      offset: new Offset(0.0, 10.0),
-                    )
-                  ]                  
-                ),
-                child: Center(
-                    child: 
-                     Text(
-                        '${manejo.titulo}',
-                        style: TextStyle(color: Colors.white, fontSize: 22.0),
-                      ),               
-                ),
-              ),
-              //Spacer(),
-          Container(
-                margin:  EdgeInsets.only(left:0.0, right: 200.0, top: 30),
-                //padding: EdgeInsets.all(20.0),
-                //height: 80.0,
-                width: 200,
-                decoration: BoxDecoration(
-                  color: manejo.colori,
-                  shape: BoxShape.rectangle,
-                  borderRadius: new BorderRadius.circular(30.0),
-                  boxShadow: <BoxShadow>[
-                    new BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 10.0,
-                      offset: new Offset(0.0, 10.0),
-                    )
-                  ]                  
-                ),
-                child: Container(
-                  padding: EdgeInsets.only(top: 6, left: 27, bottom: 6),
-                    child: 
-                     Text(
-                        'Dónde va?',
-                        style: TextStyle(color: Colors.black, fontSize: 17.0),
-                      ),               
-                ),
-          ),
-          Container(
+  Widget showTitle(){
+    return new Container(
+      margin:  EdgeInsets.only(left:10.0, right: 10.0, top: 30),
+      //padding: EdgeInsets.all(20.0),
+      height: 80.0,
+      width: 340,
+      decoration: BoxDecoration(
+        color: manejo.colori,
+        shape: BoxShape.rectangle,
+        borderRadius: new BorderRadius.circular(30.0),
+        boxShadow: <BoxShadow>[
+          new BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10.0,
+            offset: new Offset(0.0, 10.0),
+          )
+        ]                  
+      ),
+      child: Center(
+          child: 
+            Text(
+              '${manejo.titulo}',
+              style: TextStyle(color: Colors.white, fontSize: 22.0),
+            ),               
+      ),
+    );
+  }
+
+  Widget showSubtitle(frase){
+    return new Container(
+      margin:  EdgeInsets.only(left:0.0, right: 200.0, top: 30),
+      //padding: EdgeInsets.all(20.0),
+      //height: 80.0,
+      width: 200,
+      decoration: BoxDecoration(
+        color: manejo.colori,
+        shape: BoxShape.rectangle,               
+      ),
+      child: Container(
+        padding: EdgeInsets.only(top: 6, left: 27, bottom: 6),
+          child: 
+            Text(
+              frase,
+              style: TextStyle(color: Colors.black, fontSize: 17.0),
+            ),               
+      ),
+    );
+  }
+  
+  Widget showContain(){
+    return new Container(
             padding: EdgeInsets.all(20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -74,7 +65,7 @@ class Details extends StatelessWidget {
                 Expanded(
                   child: 
                   Text(
-                    'Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type',
+                    '${manejo.donde}',
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w200,
@@ -83,12 +74,55 @@ class Details extends StatelessWidget {
                     ),
                   ), 
                 ),
-                Expanded(child: Image.asset('assets/images/${manejo.icono}'),)
+                Expanded(child: Image.asset('assets/images/${manejo.tacho}'),)
               ],
             ),
-          )  
-        ],
-      ),
+          )  ;
+  }
+  
+  Widget showContainRecycle(){
+    return new Container(
+            padding: EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: 
+                  Text(
+                    '${manejo.como}',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w200,
+                      letterSpacing: 0.5,
+                      fontSize: 17,
+                    ),
+                  ), 
+                ),
+                //Expanded(child: Image.asset(imagen),)
+              ],
+            ),
+          )  ;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        //padding: EdgeInsets.all(16.0),
+        color: Colors.white,
+        child: new Form(
+          
+          child: new ListView(
+            shrinkWrap: true,
+            
+            children: <Widget>[
+              showTitle(),
+              showSubtitle("Dónde va?"),
+              showContain(),
+              showSubtitle("Cómo reciclar?"),
+              showContainRecycle()
+            ],
+          ),
+        ))
     );
   }
 }
