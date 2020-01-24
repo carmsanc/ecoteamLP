@@ -1,25 +1,84 @@
+import 'package:apppractice/pages/inicio_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'home_screen.dart';
+import 'login_screen.dart';
 //import '../services/auth_service.dart';
 
-class Signup_Screen extends StatefulWidget {
-  static final String id = 'signup_screen';
-
+class Signup_Screen extends StatelessWidget {
   @override
-  _Signup_ScreenState createState() => _Signup_ScreenState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.lightGreen,
+      ),
+      home: selectHomeScreen(),
+    );
+  }
 }
 
-class _Signup_ScreenState extends State<Signup_Screen> {
+Widget selectHomeScreen() {
+  return StreamBuilder(
+    stream: FirebaseAuth.instance.onAuthStateChanged,
+    builder: (BuildContext context, AsyncSnapshot snap) {
+      if (snap.connectionState == ConnectionState.waiting) {
+        return Text("Loading");
+      } else {
+        if (snap.hasData) {
+          FirebaseUser user = snap.data;
+          return StreamProvider<FirebaseUser>.value(
+              initialData: user,
+              value: FirebaseAuth.instance.onAuthStateChanged,
+              child: Home_Screen());
+        } else {
+          return Signup_Page();
+        }
+      }
+    },
+  );
+}
+
+class Signup_Page extends StatefulWidget {
+  @override
+  _Signup_PageState createState() => _Signup_PageState();
+}
+
+class _Signup_PageState extends State<Signup_Page> {
   final _formKey = GlobalKey<FormState>();
-  String name, email, password,sector;
-  _submit() {
-    if (_formKey.currentState.validate()) {
+  String username, _email, pwd, sector;
+
+  Future _submit() async {
+if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      print(email);
-      print(password);
-      print(name);
-      print(sector);
-    }
-    //AuthService.signupUser(context, name, email, password,sector);
+      print(_email);
+      print(pwd);
+      print(username);
+      print(sector);    
+      FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: _email, password: pwd)
+        .then((currentUser) => Firestore.instance
+                .collection("usuarios")
+                .document(currentUser.user.uid)
+                .setData({
+              "username": username,
+              "correo": _email,
+              "sector": sector
+            }).then((result) => {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Home_Screen()),
+                          (_) => false),
+                    }));
+  }}
+
+  Future signup() async {
+    await _submit();
+    debugPrint("USERNAME :$_email Password $pwd");
+    return FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: pwd);
   }
 
   @override
@@ -47,9 +106,9 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                       child: TextFormField(
                         decoration: InputDecoration(labelText: 'Username'),
                         validator: (input) => input.trim().isEmpty
-                            ? 'Please enter a valid username'
+                            ? 'Por favor ingrese un username válido'
                             : null,
-                        onSaved: (input) => name = input,
+                        onSaved: (input) => username = input,
                       ),
                     ),
                     Padding(
@@ -58,9 +117,9 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                       child: TextFormField(
                         decoration: InputDecoration(labelText: 'Email'),
                         validator: (input) => !input.contains('@')
-                            ? 'Please enter a valid email'
+                            ? 'Por favor ingrese un email válido'
                             : null,
-                        onSaved: (input) => email = input,
+                        onSaved: (input) => _email = input,
                       ),
                     ),
                     Padding(
@@ -69,9 +128,9 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                       child: TextFormField(
                         decoration: InputDecoration(labelText: 'Password'),
                         validator: (input) => input.length < 6
-                            ? 'Please enter a valid password'
+                            ? 'Por favor ingrese una contraseña'
                             : null,
-                        onSaved: (input) => password = input,
+                        onSaved: (input) => pwd = input,
                         obscureText: true,
                       ),
                     ),
@@ -80,7 +139,6 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                           horizontal: 30.0, vertical: 10.0),
                       child: TextFormField(
                         decoration: InputDecoration(labelText: 'Sector'),
-
                         onSaved: (input) => sector = input,
                       ),
                     ),
@@ -90,13 +148,15 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                     Container(
                       width: 250.0,
                       child: FlatButton(
-                        onPressed: _submit,
+                        onPressed: (){_submit();
+                        final snackBar = SnackBar(
+                      content: Text('Registro exitoso'));
+                      },
                         color: Colors.lightGreen,
                         shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(50.0)
-                                        ),
+                            borderRadius: new BorderRadius.circular(50.0)),
                         child: Text(
-                          'Register',
+                          'Registrar',
                           style: TextStyle(color: Colors.white, fontSize: 18.0),
                         ),
                       ),
@@ -104,11 +164,11 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                     Container(
                       width: 250.0,
                       child: FlatButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () => Navigator.push(context,MaterialPageRoute(
+                              builder: (context) => Login_Screen() )),
                         shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(50.0)
-                                        ),
-                        color: Colors.lightGreen,
+                            borderRadius: new BorderRadius.circular(50.0)),
+                        color: Colors.blue.shade700,
                         child: Text(
                           'Regresar',
                           style: TextStyle(color: Colors.white, fontSize: 18.0),
@@ -124,4 +184,32 @@ class _Signup_ScreenState extends State<Signup_Screen> {
       ),
     );
   }
+
+/* void _submit() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      print(_email);
+      print(pwd);
+      print(username);
+      print(sector);
+      
+      FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: _email, password: pwd)
+          .then((currentUser) => Firestore.instance
+                  .collection("usuarios")
+                  .document(currentUser.user.uid)
+                  .setData({
+                "username": username,
+                "correo": _email,
+                "sector": sector,
+                "password": pwd
+              }).then((result) => {
+                        StreamProvider<FirebaseUser>.value(
+                            initialData: currentUser.user,
+                            value: FirebaseAuth.instance.onAuthStateChanged,
+                            child: Inicio_Screen())
+                      }));
+      //AuthService.signupUser(context, name, email, password,sector);
+    }
+ */
 }

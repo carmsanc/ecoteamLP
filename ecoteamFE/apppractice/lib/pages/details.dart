@@ -1,3 +1,4 @@
+import 'package:apppractice/pages/reciclar_screen.dart';
 import 'package:flutter/material.dart';
 //import 'package:booking_app/src/models/places.dart';
 import 'manejo.dart';
@@ -10,7 +11,6 @@ class Details extends StatelessWidget {
   Widget showTitle(){
     return new Container(
       margin:  EdgeInsets.only(left:10.0, right: 10.0, top: 30),
-      //padding: EdgeInsets.all(20.0),
       height: 80.0,
       width: 340,
       decoration: BoxDecoration(
@@ -29,7 +29,7 @@ class Details extends StatelessWidget {
           child: 
             Text(
               '${manejo.titulo}',
-              style: TextStyle(color: Colors.white, fontSize: 22.0),
+              style: TextStyle(color: Colors.black, fontSize: 22.0),
             ),               
       ),
     );
@@ -67,8 +67,8 @@ class Details extends StatelessWidget {
                   Text(
                     '${manejo.donde}',
                     style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w200,
+                      color: Colors.black,
+                      
                       letterSpacing: 0.5,
                       fontSize: 17,
                     ),
@@ -91,8 +91,8 @@ class Details extends StatelessWidget {
                   Text(
                     '${manejo.como}',
                     style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w200,
+                      color: Colors.black,
+                      
                       letterSpacing: 0.5,
                       fontSize: 17,
                     ),
@@ -106,6 +106,26 @@ class Details extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar( title: Text(
+                    "Puntos de recolección",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  elevation: 0.0,
+                  actions: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 8.0, 16.0, 0.0),
+                      child: IconButton(
+                          icon: Icon(Icons.arrow_left, color: Colors.white),
+                          onPressed: () {
+                            //go to listview
+                            print('mira la lista');
+                            Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Reciclar_Screen()));
+                          }),
+                    )
+                  ],),
       body: Container(
         //padding: EdgeInsets.all(16.0),
         color: Colors.white,
@@ -116,9 +136,9 @@ class Details extends StatelessWidget {
             
             children: <Widget>[
               showTitle(),
-              showSubtitle("Dónde va?"),
+              showSubtitle("¿Dónde va?"),
               showContain(),
-              showSubtitle("Cómo reciclar?"),
+              showSubtitle("¿Cómo reciclar?"),
               showContainRecycle()
             ],
           ),

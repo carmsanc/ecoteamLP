@@ -1,13 +1,16 @@
+import 'package:apppractice/models/usuarios.dart';
 import 'package:apppractice/pages/denuncias_screen.dart';
 import 'package:apppractice/pages/inicio_screen.dart';
 import 'package:apppractice/pages/map_screen.dart';
 import 'package:apppractice/pages/reciclar_screen.dart';
+import 'package:apppractice/pages/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home_Screen extends StatefulWidget {
-  const Home_Screen({Key key, this.user}) : super(key: key);
+  Home_Screen({Key key, this.user}) : super(key: key);
   final FirebaseUser user;
 
   @override
@@ -16,6 +19,7 @@ class Home_Screen extends StatefulWidget {
 }
 
 class _Home_ScreenState extends State<Home_Screen> {
+  var user;
   int _currentTab = 0;
   PageController _pageController;
   var data;
@@ -25,22 +29,19 @@ class _Home_ScreenState extends State<Home_Screen> {
     super.initState();
 
     _pageController = PageController();
-    data = widget.user.email;
     print(data);
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.lightGreen,
-      ),
       body: PageView(
         controller: _pageController,
         children: <Widget>[
-          Inicio_Screen(data),
-          Map_Screen(data),
-          Denuncias_Screen(data),
-          Reciclar_Screen(data),
+          Inicio_Screen(),
+          Map_Screen(user),
+          Denuncias_Screen(user),
+          Reciclar_Screen(),
+          
         ],
         onPageChanged: (int index) {
           setState(() {
@@ -66,7 +67,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                   Icons.home,
                   size: 30.0,
                 ),
-                title: Text("Inicio")),
+                title: Text("Inicio", style: TextStyle(fontSize: 9),)),
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.room, //face, import_contacts,room, home
@@ -78,13 +79,13 @@ class _Home_ScreenState extends State<Home_Screen> {
                   Icons.import_contacts,
                   size: 30.0,
                 ),
-                title: Text("Residuos")),
+                title: Text("Denuncias")),
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.face,
                   size: 30.0,
                 ),
-                title: Text("Denuncias")),
+                title: Text("Residuos")),
           ]),
     );
   }

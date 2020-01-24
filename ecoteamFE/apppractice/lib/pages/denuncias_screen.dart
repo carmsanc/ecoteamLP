@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Denuncias_Screen extends StatefulWidget {
   var userData;
@@ -45,14 +48,25 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
       itemRef.push().set(item.toJson());
       print("se envio denuncia");
     }
-    
   }
 
   String descripcion;
   String _selectedSector;
   String _selectedMotivo;
-  List<String> _sector = ['Sauces', 'Alborada', 'Samanes'];
-  List<String> _motivo = ['Higiene', 'Horario incumplido', 'Otro'];
+  List<String> _sector = [
+    'Sauces',
+    'Alborada',
+    'Samanes',
+    'Guayacanes',
+    'Samborondon',
+    'Prosperina'
+  ];
+  List<String> _motivo = [
+    'Mala Higiene',
+    'Horario incumplido',
+    'Deposición de basura fuera de horario',
+    'Otro'
+  ];
   String _dropdownSector;
   String _dropdownMotivo;
   File _image;
@@ -85,7 +99,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
 
   Widget _buildHeader() {
     return SizedBox(
-      width: 230.0,
+      width: 195.0,
       height: 180.0,
       child: (_image != null)
           ? Image.file(
@@ -93,7 +107,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
               fit: BoxFit.fill,
             )
           : Image.network(
-              "https://cmkt-image-prd.freetls.fastly.net/0.1.0/ps/1097377/910/607/m1/fpnw/wm0/megaphone-flat-icon-01-.jpg?1458317566&s=f6c09b36ab66dd498ab6f5ba18aca800",
+              "https://cdn1.iconfinder.com/data/icons/business-finance-vol-1/48/10_feedback_chat_comment_discussion_message_complaint_bubble-512.png",
               fit: BoxFit.fill,
             ),
     );
@@ -181,27 +195,16 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
 
   Widget _buildFoto() {
     return RaisedButton(
+      color: Colors.blue[300],
       onPressed: () {
         getImage();
       },
-      child: Text('Elegir Imagen'),
-    );
-  }
-
-  /* Widget _buildSubir(context) {
-    return RaisedButton(
-      color: Color(0xff476cfb),
-      onPressed: () {
-        //uploadPic(context);
-      },
-      elevation: 4.0,
-      splashColor: Colors.blueGrey,
       child: Text(
-        'Subir imagen',
-        style: TextStyle(color: Colors.white, fontSize: 16.0),
+        'Elegir Imagen',
+        style: TextStyle(color: Colors.white),
       ),
     );
-  } */
+  }
 
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -212,45 +215,48 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
     });
   }
 
-  /* Future uploadPic(BuildContext context) async {
+  Future uploadPic(BuildContext context) async {
     String fileName = basename(_image.path);
     StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    setState(() {
-      print("Imagen de denuncia subida");
-      Scaffold.of(context).showSnackBar(
-          SnackBar(content: Text('Se ha seleccionado la imagen.')));
-    });
-  } */
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.lightGreen,
+        title: Text('Realizar denuncias'),
+      ),
       body: Builder(
         builder: (context) => Container(
           child: Form(
             key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: ListView(
+              shrinkWrap: true,
               children: <Widget>[
-                _buildHeader(),
-                _buildSector(),
-                _buildMotivo(),
-                _buildDescr(),
-                SizedBox(height: 10),
-                _buildFoto(),
-                //_buildSubir(context),
-                SizedBox(height: 10),
-                RaisedButton(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  
+                  children: <Widget>[
+                    _buildHeader(),
+                    _buildSector(),
+                    _buildMotivo(),
+                    _buildDescr(),
+                    SizedBox(height: 10),
+                    _buildFoto(),
+                    SizedBox(height: 10),
+                    RaisedButton(
                   color: Colors.green,
                   onPressed: () {
                     item.imagen = basename(_image.path);
                     handleSubmit();
+
+                    uploadPic(context);
                     final snackBar = SnackBar(
                       content: Text('Se ha enviado la denuncia'),
-                      
                     );
 
                     // Find the Scaffold in the widget tree and use
@@ -264,6 +270,9 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
+                  ],
+                ),
+                
               ],
             ),
           ),

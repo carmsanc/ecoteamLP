@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
       ),
       home: Login_Screen(),
       routes: {
-        Signup_Screen.id: (context) => Signup_Screen(),
         Home_Screen.id: (context) => Home_Screen()
       },
     );
