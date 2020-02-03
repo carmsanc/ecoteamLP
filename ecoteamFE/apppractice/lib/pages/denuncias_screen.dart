@@ -228,7 +228,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightGreen,
-        title: Text('Realizar denuncias'),
+        title: Text('Realizar denuncias', style:TextStyle(color: Colors.white)),
       ),
       body: Builder(
         builder: (context) => Container(

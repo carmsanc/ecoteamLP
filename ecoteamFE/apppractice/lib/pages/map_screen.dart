@@ -1,32 +1,56 @@
 import 'package:apppractice/models/basurero.dart';
 import 'package:apppractice/pages/ListPage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geocoder/geocoder.dart';
 
 class Map_Screen extends StatefulWidget {
   var userData;
   Map_Screen(this.userData);
 
   static final String id = 'map_screen';
-
   @override
-  _Map_ScreenState createState() => _Map_ScreenState();
+  _Map_ScreenState createState() => new _Map_ScreenState();
 }
-
-List<Marker> allMarkers = [];
-setMarkers() {
-  allMarkers.add(new Marker(
-      width: 45.0,
-      height: 45.0,
-      point: new LatLng(-2.113077, -79.903139),
-      builder: (context) => new Container(
-            child: IconButton(
-              icon: Icon(Icons.location_on),
-              color: Colors.greenAccent,
-              iconSize: 45.0,
-              onPressed: () {
-                showModalBottomSheet(
+ 
+class _Map_ScreenState extends State<Map_Screen> {
+  List<Marker> allMarkers = [];
+  String inputaddr = '';
+ 
+  addToList() async {
+    final query = inputaddr;
+    var addresses = await Geocoder.local.findAddressesFromQuery(query);
+    var first = addresses.first;
+    Firestore.instance.collection('markers').add({
+      'location':
+          new GeoPoint(first.coordinates.latitude, first.coordinates.longitude),
+      'nombre': first.featureName
+    });
+  }
+ 
+  
+ 
+  Widget loadMap() {
+    return StreamBuilder(
+      stream: Firestore.instance.collection('markers').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Text('Cargando...Por favor espere.');
+        for (int i = 0; i < snapshot.data.documents.length; i++) {
+          allMarkers.add(new Marker(
+              width: 45.0,
+              height: 45.0,
+              point: new LatLng(snapshot.data.documents[i]['location'].latitude,
+                  snapshot.data.documents[i]['location'].longitude),
+              builder: (context) => new Container(
+                    child: IconButton(
+                      icon: Icon(Icons.location_on),
+                      color: Colors.red,
+                      iconSize: 45.0,
+                      onPressed: () {
+                        print(snapshot.data.documents[i]['nombre']);
+                        showModalBottomSheet(
                     context: context,
                     builder: (context) {
                       return Column(
@@ -34,7 +58,7 @@ setMarkers() {
                           Ink(
                            color: Colors.lightGreen,
                            child:ListTile(
-                            title: Text("Basurero Samanes #3",
+                            title: Text(snapshot.data.documents[i]['nombre'],
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -47,14 +71,14 @@ setMarkers() {
                                     fontWeight: FontWeight.bold, fontSize: 22)),
                           ),
                           ListTile(
-                            title: Text("Lunes y Miércoles", textAlign: TextAlign.center,
+                            title: Text(snapshot.data.documents[i]['dias'], textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 18)),
                                     
                           ),
                           ListTile(
                             title: Text(
-                                "19:30 - 22:30",
+                                snapshot.data.documents[i]['horario'],
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w900,fontSize: 22, color: Colors.green.shade700)),
@@ -62,144 +86,33 @@ setMarkers() {
                         ],
                       );
                     });
-              },
-            ),
-          )));
-  allMarkers.add(new Marker(
-      width: 45.0,
-      height: 45.0,
-      point: new LatLng(-2.112278, -79.899572),
-      builder: (context) => new Container(
-            child: IconButton(
-              icon: Icon(Icons.location_on),
-              color: Colors.green,
-              iconSize: 45.0,
-              onPressed: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return Column(
-                        children: <Widget>[
-                          Ink(
-                           color: Colors.lightGreen,
-                           child:ListTile(
-                            title: Text("Basurero Samanes #2",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 26,
-                                    color: Colors.white)),
-                          )),
-                          ListTile(
-                            title: Text(" Horario de recolección:", textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 22) ),
-                          ),
-                          ListTile(
-                            title: Text("Martes y Jueves", textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 18)),
-                          ),
-                          ListTile(
-                            title: Text(
-                                "21:30 - 23:30",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900,fontSize: 22, color: Colors.green.shade700)),
-                          )
-                        ],
-                      );
-                    });
-              },
-            ),
-          )));
-  allMarkers.add(new Marker(
-      width: 45.0,
-      height: 45.0,
-      point: new LatLng(-2.112297, -79.902110),
-      builder: (context) => new Container(
-            child: IconButton(
-              icon: Icon(Icons.location_on),
-              color: Colors.red,
-              iconSize: 45.0,
-              onPressed: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return Column(
-                        children: <Widget>[
-                          Ink(
-                           color: Colors.lightGreen,
-                           child:ListTile(
-                            title: Text("Basurero Samanes #1",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 26,
-                                    color: Colors.white)),
-                          )),
-                         ListTile(
-                            title: Text("Horario de recolección:",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 22)),
-                            
-                          ),
-                          ListTile(
-                            title: Text(
-                                "Lunes, Miercoles y Sábado",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 18)),
-                          ),
-                          ListTile(
-                            title: Text(
-                                "19:30 - 22:30",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900,fontSize: 22, color: Colors.green.shade700)),
-                          )
-                        ],
-                      );
-                    });
-              },
-            ),
-          )));
-  return allMarkers;
-}
+              
+                      },
+                    ),
+                  )));
+        }
+        return new FlutterMap(
+            options: new MapOptions(
+                center: new LatLng(-2.112297, -79.902110), minZoom: 10.0),
+            layers: [
+              new TileLayerOptions(
+                  urlTemplate:
+                      "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                  subdomains: ['a', 'b', 'c']),
+              new MarkerLayerOptions(markers: allMarkers)
+            ]);
+      },
+    );
+  }
 
-class _Map_ScreenState extends State<Map_Screen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: AppBar( title: Text(
-                    "Puntos de recolección",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  elevation: 0.0,
-                  actions: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 8.0, 16.0, 0.0),
-                      child: IconButton(
-                          icon: Icon(Icons.view_list, color: Colors.white),
-                          onPressed: () {
-                            //go to listview
-                            print('mira la lista');
-                            Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ListPage(Basurero('', '', '', ''))));
-                          }),
-                    )
-                  ],),
-        body: new FlutterMap(
-            options: new MapOptions(
-                center: new LatLng(-2.112297, -79.902110), minZoom: 5.0),
-            layers: [
-          new TileLayerOptions(
-              urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-              subdomains: ['a', 'b', 'c']),
-          new MarkerLayerOptions(markers: setMarkers())
-        ]));
+        appBar: new AppBar(
+          title: new Text('Puntos de recolección', style:TextStyle(color: Colors.white)),
+          
+          centerTitle: true,
+        ),
+        body: loadMap());
   }
-}
+  }
