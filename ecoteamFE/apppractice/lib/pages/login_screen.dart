@@ -76,13 +76,13 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Center(
                 
                 child: Padding(
-                  padding: EdgeInsets.only(top:40),
+                  padding: EdgeInsets.only(top:0),
                   child: Image.asset(
-                      'assets/images/logo.png',
-                      fit: BoxFit.fitHeight,
-                      filterQuality: FilterQuality.low,
-                      height: 150,
-                      width: 150,
+                      'assets/images/logo2.png',
+                      //fit: BoxFit.fitHeight,
+                      //filterQuality: FilterQuality.low,
+                      height: 300,
+                      width: 300,
                     )),   
               ),
             ),

@@ -4,6 +4,7 @@ import 'package:apppractice/pages/inicio_screen.dart';
 import 'package:apppractice/pages/map_screen.dart';
 import 'package:apppractice/pages/reciclar_screen.dart';
 import 'package:apppractice/pages/signup_screen.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,9 +50,11 @@ class _Home_ScreenState extends State<Home_Screen> {
           });
         },
       ),
-      bottomNavigationBar: CupertinoTabBar(
-          backgroundColor: Colors.black12,
-          currentIndex: _currentTab,
+      bottomNavigationBar: CurvedNavigationBar(
+          backgroundColor: Color(0x00000000),
+          buttonBackgroundColor: Colors.lightGreen,
+          height:50,
+          index: _currentTab,
           onTap: (int index) {
             setState(() {
               _currentTab = index;
@@ -60,32 +63,12 @@ class _Home_ScreenState extends State<Home_Screen> {
                 duration: Duration(microseconds: 200),
                 curve: Curves.bounceInOut);
           },
-          activeColor: Colors.lightGreen[700],
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  size: 30.0,
-                ),
-                title: Text("Inicio", style: TextStyle(fontSize: 9),)),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.room, //face, import_contacts,room, home
-                  size: 30.0,
-                ),
-                title: Text("Puntos")),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.face,
-                  size: 30.0,
-                ),
-                title: Text("Denuncias")),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.import_contacts,
-                  size: 30.0,
-                ),
-                title: Text("Residuos")),
+          //activeColor: Colors.lightGreen[700],
+          items:<Widget> [
+            Icon(Icons.home, size: 20.0),
+            Icon(Icons.room, size: 20.0),
+            Icon(Icons.face, size: 20.0),
+            Icon(Icons.import_contacts, size: 20.0),
           ]),
     );
   }

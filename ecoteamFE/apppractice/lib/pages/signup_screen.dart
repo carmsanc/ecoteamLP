@@ -11,6 +11,7 @@ class Signup_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
@@ -168,7 +169,7 @@ if (_formKey.currentState.validate()) {
                               builder: (context) => Login_Screen() )),
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(50.0)),
-                        color: Colors.blue.shade700,
+                        color: Colors.black,
                         child: Text(
                           'Regresar',
                           style: TextStyle(color: Colors.white, fontSize: 18.0),
