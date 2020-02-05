@@ -11,6 +11,7 @@ class Login_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
@@ -63,22 +64,26 @@ class _MyHomePageState extends State<MyHomePage> {
         width: width,
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Colors.green[800], Colors.green[200]],
+                colors: [Colors.lightGreen, Colors.lightGreen[100]],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter)),
         child: Column(
+
           children: <Widget>[
             Container(
               width: width,
               height: headingHeight,
               child: Center(
-                child: Text(
-                  "Bienvenido a ECOTEAM",
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
+                
+                child: Padding(
+                  padding: EdgeInsets.only(top:40),
+                  child: Image.asset(
+                      'assets/images/logo.png',
+                      fit: BoxFit.fitHeight,
+                      filterQuality: FilterQuality.low,
+                      height: 150,
+                      width: 150,
+                    )),   
               ),
             ),
             Container(
@@ -178,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Icons.arrow_forward,
                           color: Colors.white,
                         ),
-                        backgroundColor: Colors.green.shade800,
+                        backgroundColor: Colors.black,
                         onPressed: () {
                           debugPrint("USERNAME :$username Password $password");
                           FirebaseAuth.instance.signInWithEmailAndPassword(

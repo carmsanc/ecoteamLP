@@ -99,6 +99,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
 
   Widget _buildHeader() {
     return SizedBox(
+      
       width: 195.0,
       height: 180.0,
       child: (_image != null)
@@ -194,14 +195,18 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
   }
 
   Widget _buildFoto() {
-    return RaisedButton(
-      color: Colors.blue[300],
-      onPressed: () {
+    return Container(
+      width: 250.0,
+      child: FlatButton(
+        color: Colors.black,
+        onPressed: () {
         getImage();
       },
-      child: Text(
-        'Elegir Imagen',
-        style: TextStyle(color: Colors.white),
+        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(50.0) ),
+        child: Text(
+          'Elegir imagen',
+          style: TextStyle(color: Colors.white, fontSize: 14.0),
+        ),
       ),
     );
   }
@@ -232,6 +237,7 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
       ),
       body: Builder(
         builder: (context) => Container(
+           padding:  EdgeInsets.only(top:30, left: 30, right: 30),
           child: Form(
             key: _formKey,
             child: ListView(
@@ -242,34 +248,40 @@ class _Denuncias_ScreenState extends State<Denuncias_Screen> {
                   
                   children: <Widget>[
                     _buildHeader(),
+                    SizedBox(height: 20),
                     _buildSector(),
                     _buildMotivo(),
                     _buildDescr(),
-                    SizedBox(height: 10),
+                    SizedBox(height: 100),
                     _buildFoto(),
                     SizedBox(height: 10),
-                    RaisedButton(
-                  color: Colors.green,
-                  onPressed: () {
-                    item.imagen = basename(_image.path);
-                    handleSubmit();
+                    Container(
+                      width: 250.0,
+                      child: FlatButton(
+                        color: Colors.lightGreen,
+                        onPressed: () {
+                        item.imagen = basename(_image.path);
+                        handleSubmit();
 
-                    uploadPic(context);
-                    final snackBar = SnackBar(
-                      content: Text('Se ha enviado la denuncia'),
-                    );
+                        uploadPic(context);
+                        final snackBar = SnackBar(
+                          content: Text('Se ha enviado la denuncia'),
+                        );
 
-                    // Find the Scaffold in the widget tree and use
-                    // it to show a SnackBar.
-                    Scaffold.of(context).showSnackBar(snackBar);
-                  },
-                  elevation: 4.0,
-                  splashColor: Colors.blueGrey,
-                  child: Text(
-                    'Enviar',
-                    style: TextStyle(color: Colors.white, fontSize: 16.0),
-                  ),
-                ),
+                        // Find the Scaffold in the widget tree and use
+                        // it to show a SnackBar.
+                        Scaffold.of(context).showSnackBar(snackBar);
+                      },
+                      //elevation: 4.0,
+                      splashColor: Colors.blueGrey,
+                        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(50.0) ),
+                        child: Text(
+                          'Enviar',
+                          style: TextStyle(color: Colors.white, fontSize: 14.0),
+                        ),
+                      ),
+                    ),
+                    
                   ],
                 ),
                 

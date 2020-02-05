@@ -55,7 +55,7 @@ class _Home_ScreenState extends State<Home_Screen> {
           onTap: (int index) {
             setState(() {
               _currentTab = index;
-            });
+            }); 
             _pageController.animateToPage(index,
                 duration: Duration(microseconds: 200),
                 curve: Curves.bounceInOut);
@@ -76,13 +76,13 @@ class _Home_ScreenState extends State<Home_Screen> {
                 title: Text("Puntos")),
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.import_contacts,
+                  Icons.face,
                   size: 30.0,
                 ),
                 title: Text("Denuncias")),
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.face,
+                  Icons.import_contacts,
                   size: 30.0,
                 ),
                 title: Text("Residuos")),

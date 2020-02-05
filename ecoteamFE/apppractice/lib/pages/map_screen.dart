@@ -18,18 +18,80 @@ class Map_Screen extends StatefulWidget {
 class _Map_ScreenState extends State<Map_Screen> {
   List<Marker> allMarkers = [];
   String inputaddr = '';
- 
+  String inputdias='';
+  String inputhorario= '';
+
   addToList() async {
     final query = inputaddr;
     var addresses = await Geocoder.local.findAddressesFromQuery(query);
     var first = addresses.first;
     Firestore.instance.collection('markers').add({
+      'dias': inputdias,
+      'horario': inputhorario,
       'location':
           new GeoPoint(first.coordinates.latitude, first.coordinates.longitude),
       'nombre': first.featureName
     });
   }
  
+  Future addMarker() async{
+    await showDialog(context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context){
+      return new SimpleDialog(
+        contentPadding: EdgeInsets.all(10),
+        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0) ),
+        title: new Text(
+          'Añadir nuevo punto de recolección',
+          style: new TextStyle(fontSize: 17.0),
+
+        ),
+        children: <Widget>[
+          new TextField(
+            onChanged: (String enteredLoc){
+              setState(() {
+                inputaddr = enteredLoc;
+              });
+            },
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: 'Sector'
+            ),
+          ),
+          new TextField(
+            onChanged: (String enteredLoc){
+              setState(() {
+                inputdias = enteredLoc;
+              });
+            },
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: 'Dias de recolección'
+            ),
+          ),
+          new TextField(
+            onChanged: (String enteredLoc){
+              setState(() {
+                inputhorario = enteredLoc;
+              });
+            },
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: 'Horario de recolección'
+            ),
+          ),
+          new SimpleDialogOption(
+            child: new Text('Añadir basurero',
+            style: new TextStyle( color: Colors.blue),),
+            onPressed: (){
+              addToList();
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      );
+    });
+  }
   
  
   Widget loadMap() {
@@ -39,15 +101,15 @@ class _Map_ScreenState extends State<Map_Screen> {
         if (!snapshot.hasData) return Text('Cargando...Por favor espere.');
         for (int i = 0; i < snapshot.data.documents.length; i++) {
           allMarkers.add(new Marker(
-              width: 45.0,
-              height: 45.0,
+              width: 79.0,
+              height: 79.0,
               point: new LatLng(snapshot.data.documents[i]['location'].latitude,
                   snapshot.data.documents[i]['location'].longitude),
               builder: (context) => new Container(
                     child: IconButton(
-                      icon: Icon(Icons.location_on),
-                      color: Colors.red,
-                      iconSize: 45.0,
+                      icon: ImageIcon(new AssetImage("assets/images/icon.png"), 
+                      color: Colors.green , size: 79.0),
+
                       onPressed: () {
                         print(snapshot.data.documents[i]['nombre']);
                         showModalBottomSheet(
@@ -56,6 +118,7 @@ class _Map_ScreenState extends State<Map_Screen> {
                       return Column(
                         children: <Widget>[
                           Ink(
+                           
                            color: Colors.lightGreen,
                            child:ListTile(
                             title: Text(snapshot.data.documents[i]['nombre'],
@@ -110,7 +173,9 @@ class _Map_ScreenState extends State<Map_Screen> {
     return new Scaffold(
         appBar: new AppBar(
           title: new Text('Puntos de recolección', style:TextStyle(color: Colors.white)),
-          
+          leading: new IconButton(
+            icon: Icon(Icons.add),
+            onPressed: addMarker,),
           centerTitle: true,
         ),
         body: loadMap());

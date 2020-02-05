@@ -25,7 +25,6 @@ class _Reciclar_ScreenState extends State<Reciclar_Screen> {
                     )
                   ,
       body: SafeArea(
-        
           child: Column(
             children: <Widget>[
               Expanded(child: Container(child: ImageCards()))

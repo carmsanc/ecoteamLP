@@ -54,7 +54,7 @@ class Inicio_Screen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          color: Colors.green,
+                          color: Colors.lightGreen,
                           borderRadius: BorderRadius.all(Radius.circular(
                               MediaQuery.of(context).size.width)),
                         ),
@@ -142,7 +142,7 @@ class Inicio_Screen extends StatelessWidget {
                                               borderSide: BorderSide(
                                                   color: Colors.green)))),
                                 ),
-                                MaterialButton(
+                                /*MaterialButton(
                                   color: Colors.blue[300],
                                   onPressed: () {
                                     snapshot.reference
@@ -151,6 +151,24 @@ class Inicio_Screen extends StatelessWidget {
                                   child: Text(
                                     "Guardar cambios",
                                     style: TextStyle(color: Colors.white, fontSize: 14),
+                                  ),
+                                ),*/
+                                Container(
+                                  width: 250.0,
+                                  child: FlatButton(
+                                    //onPressed: signIn,
+                                    color: Colors.black,
+                                    onPressed: () {
+                                    snapshot.reference
+                                        .updateData(pData.toMap());
+                                  },
+                                    shape: new RoundedRectangleBorder(
+                                                        borderRadius: new BorderRadius.circular(50.0)
+                                                      ),
+                                    child: Text(
+                                      'Guardar cambios',
+                                      style: TextStyle(color: Colors.white, fontSize: 14.0),
+                                    ),
                                   ),
                                 )
                               ],
